@@ -7,10 +7,19 @@ import { Tag, Sparkles, TrendingUp, Filter } from 'lucide-react';
 
 import { prisma } from '@/lib/prisma';
 import { formatDistanceToNow } from 'date-fns';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import LandingView from './LandingView';
 
 const popularTags = ['Academics', 'Course Review', 'Campus Life', 'Internships', 'Advice'];
 
 export default async function Home() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return <LandingView />;
+  }
+
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
     include: { author: true }
