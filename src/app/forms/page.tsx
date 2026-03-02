@@ -10,7 +10,11 @@ import Link from 'next/link';
 export default async function FormsPage() {
     const forms = await prisma.form.findMany({
         orderBy: { createdAt: 'desc' },
-        include: { author: true }
+        include: {
+            author: true,
+            // @ts-ignore - Bypass cached Prisma client types
+            responses: true
+        }
     });
 
     return (
@@ -49,13 +53,15 @@ export default async function FormsPage() {
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)' }}>
                                     <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
                                         <MessageSquare size={14} style={{ display: 'inline', marginRight: '0.25rem' }} />
-                                        0 Responses
+                                        {form.responses?.length || 0} Responses
                                     </span>
                                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                                         <Button variant="secondary" size="sm">
                                             <LinkIcon size={14} /> Copy Link
                                         </Button>
-                                        <Button variant="ghost" size="sm">View</Button>
+                                        <Link href={`/forms/${form.id}`}>
+                                            <Button variant="ghost" size="sm">View</Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </Card>

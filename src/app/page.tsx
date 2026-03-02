@@ -4,14 +4,12 @@ import styles from './page.module.css';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Tag, Sparkles, TrendingUp, Filter } from 'lucide-react';
-
 import { prisma } from '@/lib/prisma';
 import { formatDistanceToNow } from 'date-fns';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import LandingView from './LandingView';
-
-const popularTags = ['Academics', 'Course Review', 'Campus Life', 'Internships', 'Advice'];
+import LikeButton from '@/components/LikeButton';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -20,10 +18,29 @@ export default async function Home() {
     return <LandingView />;
   }
 
+  const userId = (session.user as any)?.id;
+
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
-    include: { author: true }
+    include: {
+      author: true,
+      likes: true // Fetch all likes for counts
+    }
   });
+
+  // Aggregate tags dynamically from DB
+  const tagCounts: Record<string, number> = {};
+  posts.forEach(post => {
+    post.tags.forEach(tag => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+    });
+  });
+
+  // Sort and pick top 6 tags
+  const topTags = Object.entries(tagCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([tag]) => tag);
 
   return (
     <div className={styles.homeContainer}>
@@ -36,12 +53,16 @@ export default async function Home() {
               Popular Tags
             </h3>
             <div className={styles.tagList}>
-              {popularTags.map(tag => (
-                <button key={tag} className={styles.tagBadge}>
-                  <Tag size={14} />
-                  {tag}
-                </button>
-              ))}
+              {topTags.length === 0 ? (
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>No tags yet</span>
+              ) : (
+                topTags.map(tag => (
+                  <button key={tag} className={styles.tagBadge}>
+                    <Tag size={14} />
+                    {tag}
+                  </button>
+                ))
+              )}
             </div>
           </div>
 
@@ -78,6 +99,11 @@ export default async function Home() {
           ) : (
             posts.map((post: any) => {
               const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
+
+              // Calculate likes
+              const likesCount = post.likes?.length || 0;
+              const hasLiked = userId ? post.likes?.some((like: any) => like.userId === userId) : false;
+
               return (
                 <Card key={post.id} hoverable className={styles.postCard}>
                   <div className={styles.postMeta}>
@@ -94,7 +120,12 @@ export default async function Home() {
                         <span key={tag} className={styles.smallTag}>{tag}</span>
                       ))}
                     </div>
-                    <Button variant="ghost" size="sm">❤️ 0</Button>
+
+                    <LikeButton
+                      postId={post.id}
+                      initialLikes={likesCount}
+                      initialHasLiked={hasLiked}
+                    />
                   </div>
                 </Card>
               );
