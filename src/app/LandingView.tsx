@@ -20,15 +20,15 @@ export default function LandingView() {
                 fontSize: '0.875rem',
                 fontWeight: 600
             }}>
-                <Shield size={14} /> Only for Jaypee University Guna Students
+                <Shield size={14} /> Only for Jaypee Students
             </div>
 
             <h1 style={{ fontSize: '3.5rem', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.1, letterSpacing: '-0.02em', maxWidth: '800px', margin: '0 auto 1.5rem auto' }}>
-                The <span className="gradient-text">Anonymous Voice</span> of JUET
+                <span className="gradient-text">Jaypee says tea</span>
             </h1>
 
             <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: 1.6 }}>
-                A secure, exclusive space for JUET Guna students to share insights, honest reviews, and connect without ever revealing their identity.
+                A private anonymous community only for Jaypee students.
             </p>
 
             <div style={{ marginBottom: '5rem' }}>

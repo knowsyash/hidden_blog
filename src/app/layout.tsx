@@ -4,8 +4,8 @@ import { Navbar } from '@/components/layout/Navbar';
 import Providers from '@/components/Providers';
 
 export const metadata: Metadata = {
-  title: 'Anonymous Institute Platform',
-  description: 'A robust, modern, and anonymous platform for institute students.',
+  title: 'Jaypee says tea',
+  description: 'A private anonymous community only for Jaypee students.',
 };
 
 export default function RootLayout({

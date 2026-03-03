@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
                     <div className={styles.logoIcon}>
                         <Users size={20} />
                     </div>
-                    <span className={styles.logoText}>AnonConnect</span>
+                    <span className={styles.logoText}>Jaypee says tea</span>
                 </Link>
 
                 <nav className={styles.navLinks}>
@@ -28,6 +28,10 @@ export const Navbar: React.FC = () => {
                     <Link href="/forms" className={styles.navLink}>
                         <MessageSquare size={18} />
                         Forms
+                    </Link>
+                    <Link href="/about" className={styles.navLink}>
+                        <Users size={18} />
+                        About
                     </Link>
                 </nav>
 
