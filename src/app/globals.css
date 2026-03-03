@@ -6,15 +6,15 @@
   --bg-secondary: #14141f;
   --bg-glass: rgba(20, 20, 31, 0.6);
   --bg-glass-hover: rgba(30, 30, 45, 0.8);
-  
+
   --text-primary: #ffffff;
   --text-secondary: #a0a0b0;
   --text-muted: #666677;
-  
+
   --accent-primary: #6d28d9;
   --accent-glow: rgba(109, 40, 217, 0.4);
   --accent-secondary: #0ea5e9;
-  
+
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-focus: rgba(109, 40, 217, 0.5);
 
@@ -22,7 +22,7 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-  
+
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -52,7 +52,7 @@ body::before {
   left: -10%;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0, 0, 0, 0) 70%);
   filter: blur(100px);
   z-index: -1;
   pointer-events: none;
@@ -65,7 +65,7 @@ body::after {
   right: -10%;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
   filter: blur(80px);
   z-index: -1;
   pointer-events: none;
@@ -79,9 +79,28 @@ body::after {
   background-clip: text;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
 }
 
 a {
@@ -117,6 +136,12 @@ a:hover {
   padding: 0 1.5rem;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
+
 .flex-center {
   display: flex;
   align-items: center;
@@ -127,6 +152,12 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .grid-auto {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Custom Scrollbar */

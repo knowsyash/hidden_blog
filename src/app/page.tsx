@@ -84,10 +84,23 @@ export default async function Home() {
       {/* Main Feed */}
       <main className={styles.feed}>
         <header className={styles.feedHeader}>
-          <h1 className="gradient-text">Latest Insights</h1>
-          <Button variant="secondary" size="sm">
-            <Filter size={16} /> Filter
-          </Button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h1 className="gradient-text">Latest Insights</h1>
+              <Button variant="secondary" size="sm">
+                <Filter size={16} /> Filter
+              </Button>
+            </div>
+
+            {/* Mobile Create Insight Button */}
+            <div className={styles.mobileActions}>
+              <Link href="/insights/new" style={{ textDecoration: 'none', width: '100%' }}>
+                <Button variant="primary" fullWidth>
+                  <Sparkles size={16} style={{ marginRight: '0.5rem' }} /> Create Insight
+                </Button>
+              </Link>
+            </div>
+          </div>
         </header>
 
         <div className={styles.postsList}>
